@@ -1,0 +1,55 @@
+#Install Docker CE Ubuntu
+sudo apt install docker-ce -y --nobest
+#Install Docker CE CentOS
+sudo yum install yum-utils device-mapper-persistent-data lvm2 -y
+sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+sudo yum install docker-ce -y --nobest
+#Start docker service
+sudo systemctl start docker
+sudo systemctl enable /usr/lib/systemd/system/docker.service
+#start docker
+docker start
+#pull docker image for conjur
+docker pull captainfluffytoes/dap:11.1.1
+#rename the conjur image
+docker tag captainfluffytoes/dap:11.1.1 cyberark/dap:11.1.1
+# display current docker images
+docker images
+#create a container called conjur-master
+docker container run -d --name conjur-master --restart always --security-opt=seccomp:unconfined -p "443:443" -p "5432:5432" -p "1999:1999" cyberark/dap:11.1.1
+#display docker containers and their status
+docker ps
+#login to the conjur-master CLI
+docker exec -it conjur-master bash
+#pull conjur-cli image from repo
+docker pull cyberark/conjur-cli:5
+#create docker network 'conjur'
+docker network create conjur
+#create docker container for conjur-cli
+docker container run -d --name conjur-cli --network conjur --restart always --entrypoint "" cyberark/conjur-cli:5 sleep infinity
+
+Docker exec conjur-master evoke configure master --accept-eula --hostname conjur-master --admin-password Cyberark1 orgname
+
+Curl https://localhost/health -k
+
+#show ALL containers
+docker ps -aq
+
+#Show port 443 mappings
+sudo netstat -tulpn | grep 443
+
+
+# Start minishift using VirtualBox driver
+./minishift start --vm-driver virtualbox
+
+#minishift REST API
+curl https://localhost:8443/oapi/v1/users \
+
+
+/Users/admin/Library/Containers/com.docker.docker/Data/vms/0/data
+
+
+docker cp host1:/tmp/standby-seed.tar .
+
+
+4UU5G-VCC4Y-AYACA-MCHEA-EAM45
